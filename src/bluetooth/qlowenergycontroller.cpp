@@ -745,6 +745,7 @@ void QLowEnergyController::discoverServices()
         qCWarning(QT_BT) << "Cannot discover services in peripheral role";
         return;
     }
+
     if (d->state != QLowEnergyController::ConnectedState)
         return;
 
@@ -970,6 +971,14 @@ QString QLowEnergyController::errorString() const
 QLowEnergyController::Role QLowEnergyController::role() const
 {
     return d_ptr->role;
+}
+
+void QLowEnergyController::switchRole()
+{
+    if (d_ptr->role == PeripheralRole)
+        d_ptr->role = CentralRole;
+    else
+        d_ptr->role = PeripheralRole;
 }
 
 QT_END_NAMESPACE

@@ -1918,11 +1918,9 @@ bool QLowEnergyControllerPrivate::increaseEncryptLevelfRequired(quint8 errorCode
             return false;
         if (!hciManager->monitorEvent(HciManager::EncryptChangeEvent))
             return false;
-        if (securityLevelValue != BT_SECURITY_HIGH) {
-            qCDebug(QT_BT_BLUEZ) << "Requesting encrypted link";
-            if (setSecurityLevel(BT_SECURITY_HIGH))
-                return true;
-        }
+        qCDebug(QT_BT_BLUEZ) << "Requesting encrypted link";
+        if (setSecurityLevel(BT_SECURITY_MEDIUM))
+            return true;
         break;
     default:
         break;
@@ -2770,6 +2768,7 @@ void QLowEnergyControllerPrivate::handleConnectionRequest()
     restoreClientConfigurations();
     loadSigningDataIfNecessary(RemoteSigningKey);
     setState(QLowEnergyController::ConnectedState);
+    emit q_ptr->connected();
 }
 
 void QLowEnergyControllerPrivate::closeServerSocket()

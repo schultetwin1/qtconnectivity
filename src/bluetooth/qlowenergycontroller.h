@@ -136,6 +136,8 @@ public:
 
     Role role() const;
 
+    void switchRole();
+
 Q_SIGNALS:
     void connected();
     void disconnected();
